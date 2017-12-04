@@ -1,0 +1,21 @@
+NIST X-ray Attenuation Databases
+
+calMu程序用来计算各类材料对不同能量光子（X射线、gamma射线，能量范围：1keV至100GeV）
+的质量衰减系数，包括GateMaterials罗列的材料。
+
+其中，xcom.h、xcom.cpp是由C语言重写了XCOM（Fortran）程序，
+用来解析和计算各类元素混合物的散射、光电效应，电子对湮灭作用的截面计算。
+所用到的数据库可以到https://physics.nist.gov/PhysRefData/Xcom/Text/download.html这个网上下载。
+解压XCOM程序包，拷贝所有MDATX3文件到data目录下。
+
+GateMaterialsDB.h、GateMaterialsDB.cpp用来解析Gate程序用到的材料数据。
+
+calMu.cpp是mian函数所在的源文件。
+
+本程序由cmake搭建编译环境。
+
+cmake生成编译环境，并编译好calMu程序后。
+在data文件夹的上层文件夹下新建一个bin文件夹，把calMu程序拷贝进去，不然会找不到数据库。
+
+
+本程序只是个人研究X-Ray Attenuation的副产物，不保证结果准确性，如有疑问，欢迎交流！
