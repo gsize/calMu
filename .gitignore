@@ -1,0 +1,12 @@
+*~
+*.submit
+*.swp
+
+data/
+figure/
+bin/
+*.png
+build/
+output/
+XCOM_src/
+src/main.cpp
