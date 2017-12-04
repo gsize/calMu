@@ -2,7 +2,7 @@
 *.submit
 *.swp
 
-data/
+data/MDATX3*
 figure/
 bin/
 *.png
