@@ -103,6 +103,21 @@ Element *MaterialDB::FindElementByFullName(string name)
 	}
 	return  NULL;
 }
+
+Material *MaterialDB::FindMaterialByName(string name)
+{
+	if(m_matList.size()>0)
+	{
+		Material *el;
+		for(int i=0;i<m_matList.size();i++)
+		{
+			if(name == m_matList[i].GetName())
+				return &(m_matList[i]);
+		}
+	}
+	return  NULL;
+}
+
 int MaterialDB::ReadDB(string dbFile)
 {
 	FILE *pf = fopen(dbFile.c_str(),"r");
@@ -171,7 +186,11 @@ int MaterialDB::ReadDB(string dbFile)
 			sscanf(strBuf,"%[^:]:%*[^=]=%f%*[^=]=%d",fname,&d,&n);
 			string fn(fname);
 			mat.SetName(fn);
-			mat.SetDensity(d);
+
+			if(str.find("mg/cm3")!=string::npos)
+				mat.SetDensity(0.001*d);
+			else
+				mat.SetDensity(d);
 			mat.SetNum(n);
 		}
 		if(flag ==2 && str.find("+el")!=string::npos)
@@ -199,7 +218,7 @@ int MaterialDB::ReadDB(string dbFile)
 				{
 					mat.AddElement(*el_tmp);
 					mat.Addf(f);
-				//	mat.SetM(mat.GetM()+f*el_tmp->m_A);
+					//	mat.SetM(mat.GetM()+f*el_tmp->m_A);
 				}
 				else
 					mat.SetNum(mat.GetNum()-1);
@@ -209,7 +228,7 @@ int MaterialDB::ReadDB(string dbFile)
 	}
 	fclose(pf);
 
-// add last material
+	// add last material
 	if(mat.GetNum()>0)
 	{
 		if(nList.size()>0)
@@ -227,6 +246,35 @@ int MaterialDB::ReadDB(string dbFile)
 		mat.Clear();
 	}
 	return status;
+}
+
+int MaterialDB::ReadMu(string muFile)
+{
+	FILE *pf=NULL;
+	pf = fopen(muFile.c_str(),"r");
+	if(!pf)
+	{
+		printf("Read mumap failure!\n");
+		return -1;
+	}
+	char strBuf[256];
+	while(fgets(strBuf,256,pf))
+	{
+		string str(strBuf);
+		if(str.find("#")!=string::npos)
+		{
+			char mat[50];
+			float density,energy,muMass,mu;
+			Material *pMat=NULL;
+			sscanf(strBuf,"%s%f%f%f%f",mat,&density,&energy,&muMass,&mu);
+			string str(mat);
+			pMat= FindMaterialByName(str);
+			if(pMat)
+				pMat->SetMu(mu);
+			else
+				printf("MaterialDB don't have material %s\n",mat);
+		}
+	}
 }
 
 void MaterialDB::PrintElements()

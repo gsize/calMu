@@ -43,6 +43,8 @@ class Material
 		void GetVectorf(vector<float> &f){f = m_f;};
 		float GetM(){return m_M;};
 		void SetM(float f){m_M=f;};
+		float GetMu(){return m_mu511;};
+		void SetMu(float mu){m_mu511 = mu;};
 		void Print(int flag =0);
 		void Clear();
 
@@ -53,6 +55,7 @@ class Material
 	vector<Element> m_elements;
 	vector<float> m_f;
 	float m_M;
+	float m_mu511;
 };
 
 class MaterialDB
@@ -61,7 +64,9 @@ class MaterialDB
 		MaterialDB(){};
 
 		int ReadDB(string dbFile);
+		int ReadMu(string muFile);
 		Element *FindElementByFullName(string name);
+		Material *FindMaterialByName(string name);
 		void PrintMaterials(int flag =0);
 		void PrintElements();
 
