@@ -261,7 +261,7 @@ int MaterialDB::ReadMu(string muFile)
 	while(fgets(strBuf,256,pf))
 	{
 		string str(strBuf);
-		if(str.find("#")!=string::npos)
+		if(str.find("#")==string::npos)
 		{
 			char mat[50];
 			float density,energy,muMass,mu;
