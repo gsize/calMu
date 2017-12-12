@@ -34,29 +34,32 @@ int main(int argc, char** argv)
 	}
 	*/
 	//read Gate MaterialsDB
+	string gateMaterialsDB("../data/GateMaterials.db");
+	string muFile("../data/mumap.txt");
 	MaterialDB matDB;
-	matDB.ReadDB("../data/GateMaterials.db");
-	matDB.PrintElements();
-	matDB.PrintMaterials(1);
-	matDB.ReadMu("../data/mumap.txt");
+	matDB.ReadDB(gateMaterialsDB);
+	//	matDB.PrintElements();
+	//	matDB.PrintMaterials(1);
+	matDB.ReadMu(muFile);
 
 	printf("-------------------------------------------------\n");
 	int MMAX;
 	int NZ[100];
 	float WT[100];
+	/*
+	   string w(argv[1]);
+	   w +=' ';
+	   MMAX =ParseFormulas(w.c_str(),NZ,WT);
+	   if(MMAX<0)
+	   {
+	   printf("FORM status %d\n",MMAX);
+	   return -1;
+	   }
+	   for(int i=0;i<MMAX;i++)
+	   printf("ele:%s MMAX: %d JZ[%d]: %d WT[%d]: %f\n",w.c_str(),MMAX,i,NZ[i],i,WT[i]);
 
-	string w(argv[1]);
-	w +=' ';
-	MMAX =ParseFormulas(w.c_str(),NZ,WT);
-	if(MMAX<0)
-	{
-		printf("FORM status %d\n",MMAX);
-		return -1;
-	}
-	for(int i=0;i<MMAX;i++)
-		printf("ele:%s MMAX: %d JZ[%d]: %d WT[%d]: %f\n",w.c_str(),MMAX,i,NZ[i],i,WT[i]);
-
-
+	   printf("-------------------------------------------------\n");
+	   */
 	for(int i=0;i<matDB.m_matList.size();i++)
 	{
 		int MMAX;
@@ -101,12 +104,13 @@ int main(int argc, char** argv)
 
 		float SCTCO[ME],SCTIN[ME],PHT[ME],PRAT[ME],PREL[ME];
 		Calculation(KMAX,NZ,WT, NF,NEGO,lenth,EN,KZ,KM,SCTCO,SCTIN,PHT,PRAT,PREL);
-
+		if(i==0)
+			printf("material  density(g/cm3) gamma(keV)  mu_mass(cm2/g)  mu(cm-1)\n");
 		float crossAll=0.;
 		for(int j=0;j<lenth; j++)
 		{
 			crossAll =SCTCO[j]+SCTIN[j]+PHT[j]+PRAT[j]+PREL[j];
-			printf("%15s  %10.3E  %10.3lf  %10.6E  %10.6E\n",matDB.m_matList[i].GetName().c_str(),matDB.m_matList[i].GetDensity(),EN[j]/1000.,crossAll,0.1*crossAll*matDB.m_matList[i].GetDensity());
+			printf("%15s  %10.3E  %10.3lf  %10.6E  %10.6E\n",matDB.m_matList[i].GetName().c_str(),matDB.m_matList[i].GetDensity(),EN[j]/1000.,crossAll,crossAll*matDB.m_matList[i].GetDensity());
 		}
 	}
 	return 0;
