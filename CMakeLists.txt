@@ -6,7 +6,7 @@ project(calMu)
 
 message("project source dir: ${PROJECT_SOURCE_DIR}")
 
-SET(SRC ${PROJECT_SOURCE_DIR}/src/xcom.cpp ${PROJECT_SOURCE_DIR}/src/GateMaterialsDB.cpp ${PROJECT_SOURCE_DIR}/src/calMu.cpp)
+SET(SRC ${PROJECT_SOURCE_DIR}/src/xcom.cpp ${PROJECT_SOURCE_DIR}/src/GateMaterialsDB.cpp )
 
 #add_definitions(-D_WINDOWS_PLATFORM)
 
@@ -29,8 +29,8 @@ ELSE ()
 ENDIF()
 
 
-add_executable(calMuMap ${PROJECT_SOURCE_DIR}/src/main.cpp )
-add_executable(calMu ${SRC} )
+add_executable(calMuMap  ${SRC} ${PROJECT_SOURCE_DIR}/src/main.cpp )
+add_executable(calMu ${SRC} ${PROJECT_SOURCE_DIR}/src/calMu.cpp)
 
 
 
