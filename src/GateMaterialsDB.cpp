@@ -16,6 +16,7 @@ Element& Element::operator=(const Element &el)
 	this->m_shortName = el.m_shortName;
 	this->m_Z =el.m_Z;
 	this->m_A = el.m_A;
+return *this;
 }
 
 void Element::Print()
@@ -50,6 +51,7 @@ Material& Material::operator=(const Material& mat)
 	this->m_f = mat.m_f;
 	this->m_elements = mat.m_elements;
 	this->m_M = mat.m_M;
+return *this;
 }
 
 void Material::AddElement(Element ele)
@@ -275,6 +277,7 @@ int MaterialDB::ReadMu(string muFile)
 				printf("MaterialDB don't have material %s\n",mat);
 		}
 	}
+	return 0;
 }
 
 void MaterialDB::PrintElements()
