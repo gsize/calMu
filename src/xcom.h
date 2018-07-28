@@ -32,27 +32,27 @@ int ReadMDATX3(char *file,MDATX3 *data);
 // input parameter:
 //    NMAX: size of E
 //    E   : pointer to  list of energy
-template <class T>
+template <typename T>
 void SORT(int NMAX, T *E);
 
 // merges energy lists
-template <class T>
+template <typename T>
 int MERGE(T* E1,int *K1,int *L1,int MMAX,T*  E2,int *K2,int *L2,int NMAX);
 
 // Reverses the order of lists
-template <class T>
+template <typename T>
 void REV(int NMAX,T *X);
 
 //fits F as a function of X, and calculates cubic spline coefficients A,B,C and D
-template <class T>
+template <typename T>
 int SCOF(T *X,T *F,const int NMAX,T *A,T *B,T *C,T *D);
 
 // Evaluates cubic spline as function of S, to obtain fitted result G.
-template <class T>
+template <typename T>
 int BSPOL(const T S,T *X,T *A,T *B,T *C,T *D,const int N,T &G);
 
 // Linear interpolation routine
-template <class T>
+template <typename T>
 int BLIN(const T S,T *X,T *Y,const int N,T &TY);
 
 //////////////////////////////////////////////////////////////
@@ -69,14 +69,12 @@ int ParseFormulas(const char *W,int *JZ,float *WT);
 //   NZ   : list of atomic number of element
 //   NEGO : flag of output status in energy list (1: default energy list(1 keV -- 100 GeV ) ; 2:default and add energy list; 3: only input energy list,)
 //   JENG : number of add energy 
-//   JZ   : list of add energy flag
-//   JM   : list of add energy flag
 //   EAD  : list of add energy
 //   EN   : list of energy wanted to output
 //   KZ   : list of energy wanted to output flag
 //   KM   : list of energy wanted to output flag
 // return:  the number of output energy
-int InitEnergyList(int KMAX,int *NZ,int NEGO,int JENG,int *JZ,int *JM,float *EAD,float *EN,int *KZ,int *KM);
+int InitEnergyList(int KMAX,int *NZ,int NEGO,int JENG,float *EAD,float *EN,int *KZ,int *KM);
 
 // calculate the cross sections for the interactions of photons with element, compound or mixture
 // input parameter:

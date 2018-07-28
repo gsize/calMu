@@ -87,7 +87,19 @@ int ReadMDATX3(char *file,MDATX3 *p)
 	return 0;
 }
 
-int InitEnergyList(int KMAX,int *NZ,int NEGO,int JENG,int *JZ,int *JM,float *EAD,float *EN,int *KZ,int *KM)
+/////////////////////////////////////////////////
+//  Initial the parameters about the searched material 
+//  Input:
+//  - KMAX: numbers of element in material
+//  - NZ  : lists of Z of element in material
+//  - NEGO: Flag how to print energy list(3:only print energy list inputed;2:add input energy list in default)
+//  - JENG: number of energy list inputed
+//  - EAD : list of energy inputed
+//  - EN  : list of energy outputed
+//  - KZ  : flag of 
+//  - KM  : flag of 
+
+int InitEnergyList(int KMAX,int *NZ,int NEGO,int JENG,/*int *JZ,int *JM,*/float *EAD,float *EN,int *KZ,int *KM)
 {
 	int  NENG= 80;//number of energy list 
 	float ENB[80] ={1.0E+03,1.5E+03,2.0E+03,3.0E+03,4.0E+03,5.0E+03,
@@ -131,6 +143,7 @@ int InitEnergyList(int KMAX,int *NZ,int NEGO,int JENG,int *JZ,int *JM,float *EAD
 		lenEN = NENG;
 		if(NEGO ==2) // add input energy list
 		{
+			int JZ[600],JM[600];
 			for(int i=0;i<JENG;i++)
 			{
 				JZ[i] = -1;
@@ -210,7 +223,23 @@ int InitEnergyList(int KMAX,int *NZ,int NEGO,int JENG,int *JZ,int *JM,float *EAD
 	}
 	return lenEN;
 }
-
+///////////////////////////////////////////////////////////////
+//  Calculate X-ray and gamma Phnton cross sections for  material 
+//  Input:
+//  - KMAX: numbers of element in material
+//  - NZ  : lists of Z of element in material
+//  - WEIGHT : ratio of each element in material
+//  - NF   : Flag for select the unit of result (3:cm2/g)
+//  - NEGO: Flag how to print energy list(3:only print energy list inputed;2:add input energy list in default)
+//  - NENG  : number of energy list to calculation
+//  -  EN  : lists of energy 
+//  - KZ  :
+//  - KM  :
+//  - SCTCO  : scattering coherent cross sections
+//  - SCTIN  : scattering incoherent cross sections
+//  - PHT  : photo-electric absorption
+//  - PRAT  : pair production in nuclear field
+//  - PREL  : pair production in electron field
 void Calculation(int KMAX,int *NZ,float *WEIGHT, int NF,int NEGO,int NENG,float *EN,int *KZ,int *KM,float *SCTCO,float *SCTIN,float *PHT,float *PRAT,float *PREL)
 {
 	float ENL[ME],PHDIF[ME];
@@ -721,7 +750,7 @@ int ParseFormulas(const char *W,int *JZ,float *WT)
 }
 
 // Sorts into monotonically increasing order 
-	template <class T>
+	template <typename T>
 void SORT(int NMAX, T *E)
 {
 	float EBIC = 1.0E+20;
@@ -741,7 +770,7 @@ void SORT(int NMAX, T *E)
 	}
 }
 // merges energy lists
-	template <class T>
+	template <typename T>
 int MERGE(T* E1,int *K1,int *L1,int MMAX,T*  E2,int *K2,int *L2,int NMAX)
 {
 	int MLIM =200;
@@ -779,7 +808,7 @@ int MERGE(T* E1,int *K1,int *L1,int MMAX,T*  E2,int *K2,int *L2,int NMAX)
 }
 
 // Reverses the order of lists
-	template <class T>
+	template <typename T>
 void REV(int NMAX,T *X)
 {
 	int NH = NMAX/2;
@@ -793,7 +822,7 @@ void REV(int NMAX,T *X)
 }
 
 //fits F as a function of X, and calculates cubic spline coefficients A,B,C and D
-	template <class T>
+	template <typename T>
 int SCOF(T *X,T *F,const int NMAX,T *A,T *B,T *C,T *D)
 {
 	int M1 =1;
@@ -837,7 +866,7 @@ int SCOF(T *X,T *F,const int NMAX,T *A,T *B,T *C,T *D)
 }
 
 // Evaluates cubic spline as function of S, to obtain fitted result G.
-	template <class T>
+	template <typename T>
 int BSPOL(const T S,T *X,T *A,T *B,T *C,T *D,const int N,T &G)
 {
 	int IDIR,MLB,MUB,MU,ML;
@@ -879,7 +908,7 @@ int BSPOL(const T S,T *X,T *A,T *B,T *C,T *D,const int N,T &G)
 }
 
 // Linear interpolation routine
-	template <class T>
+	template <typename T>
 int BLIN(const T S,T *X,T *Y,const int N,T &TY)
 {
 	int IDIR,MLB,MUB,MU,ML;

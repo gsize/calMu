@@ -31,7 +31,6 @@ void AnalysisChemicalFormulas(char* formulas)
     printf("-------------------------------------------------\n");
 
     float EAD[600];
-    int JZ[600],JM[600];
     int JENG =1;
 
     float EN[1200];
@@ -45,7 +44,7 @@ void AnalysisChemicalFormulas(char* formulas)
 
     NEGO =2; //2: show all energy list (default and adding) 
 
-    lenth = InitEnergyList(KMAX,NZ,NEGO,JENG,JZ,JM,EAD,EN,KZ,KM);
+    lenth = InitEnergyList(KMAX,NZ,NEGO,JENG,EAD,EN,KZ,KM);
 
     float SCTCO[ME],SCTIN[ME],PHT[ME],PRAT[ME],PREL[ME];
     Calculation(KMAX,NZ,WT, NF,NEGO,lenth,EN,KZ,KM,SCTCO,SCTIN,PHT,PRAT,PREL);
@@ -100,7 +99,6 @@ void AnalysisGateMaterials()
         }
 
         float EAD[600];
-        int JZ[600],JM[600];
         int JENG =1;
         EAD[0]=511000.0;
 
@@ -119,7 +117,7 @@ void AnalysisGateMaterials()
         // print material information
         //matDB.m_matList[i].Print(1);
 
-        lenth = InitEnergyList(KMAX,NZ,NEGO,JENG,JZ,JM,EAD,EN,KZ,KM);
+        lenth = InitEnergyList(KMAX,NZ,NEGO,JENG,EAD,EN,KZ,KM);
 
         float SCTCO[ME],SCTIN[ME],PHT[ME],PRAT[ME],PREL[ME];
         Calculation(KMAX,NZ,WT, NF,NEGO,lenth,EN,KZ,KM,SCTCO,SCTIN,PHT,PRAT,PREL);
