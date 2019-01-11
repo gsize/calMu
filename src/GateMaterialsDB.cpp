@@ -5,8 +5,8 @@
 
 
 Element::Element():
-	m_Z(-1)
-	,m_A(-1.)
+	m_Z(0)
+	,m_A(0.0)
 {
 }
 Element& Element::operator=(const Element &el)
@@ -27,16 +27,16 @@ void Element::Print()
 }
 
 Material::Material():
-	m_n(-1)
-	,m_density(-1.0)
-	,m_M(-1.0)
+	m_n(0)
+	,m_density(0.0)
+	,m_M(0.0)
 {
 }
 void Material::Clear()
 {
-	m_n =-1;
-	m_density =-1.0;
-	m_M =-1.0;
+	m_n =0;
+	m_density =0.0;
+	m_M =0.0;
 	m_elements.clear();
 	m_f.clear();
 }
