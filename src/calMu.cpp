@@ -49,6 +49,11 @@ void AnalysisChemicalFormulas(char* formulas)
     float SCTCO[ME],SCTIN[ME],PHT[ME],PRAT[ME],PREL[ME],PHDIF[ME];
     Calculation(KMAX,NZ,WT, NF,NEGO,lenth,EN,KZ,KM,SCTCO,SCTIN,PHT,PRAT,PREL,PHDIF);
 
+    printf("          Photon      Scattering        Photo-     Pair production    Total attenuation\n");
+    printf("          energy   coherent  incoher.  electric     in        in       with     without\n");
+    printf("                                       absorption  nuclear electron  coherent  coherent\n");
+    printf("                                                    field    field     scatt.    scatt.\n");
+    printf("          (MeV)    (cm2/g)    (cm2/g)   (cm2/g)    (cm2/g)  (cm2/g)   (cm2/g)   (cm2/g)\n");
     for(int j=0;j<lenth; j++)
     {
         float crossAll =SCTCO[j]+SCTIN[j]+PHT[j]+PRAT[j]+PREL[j];
