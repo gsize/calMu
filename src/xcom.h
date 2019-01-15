@@ -92,6 +92,7 @@ int InitEnergyList(int KMAX,int *NZ,int NEGO,int JENG,float *EAD,float *EN,int *
 //   PHT   : photo elctric
 //   PRAT  : pair proudction in nuclear field
 //   PREL  : pair proudction in electron field
-void Calculation(int KMAX,int *NZ,float *WEIGHT, int NF,int NEGO,int NENG,float *EN,int *KZ,int *KM,float *SCTCO,float *SCTIN,float *PHT,float *PRAT,float *PREL);
+//   PHDIF : shell jump energy
+void Calculation(int KMAX,int *NZ,float *WEIGHT, int NF,int NEGO,int NENG,float *EN,int *KZ,int *KM,float *SCTCO,float *SCTIN,float *PHT,float *PRAT,float *PREL,float *PHDIF);
 
 #endif

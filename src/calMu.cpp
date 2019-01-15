@@ -38,7 +38,7 @@ void AnalysisChemicalFormulas(char* formulas)
     int lenth= 0;
 
     int NEGO =3; //3:only input energy list 
-    int NF = 3;
+    int NF = 3;  //3: cm2/g
     int KMAX = MMAX;
     EAD[0]=511000.0;
 
@@ -46,14 +46,19 @@ void AnalysisChemicalFormulas(char* formulas)
 
     lenth = InitEnergyList(KMAX,NZ,NEGO,JENG,EAD,EN,KZ,KM);
 
-    float SCTCO[ME],SCTIN[ME],PHT[ME],PRAT[ME],PREL[ME];
-    Calculation(KMAX,NZ,WT, NF,NEGO,lenth,EN,KZ,KM,SCTCO,SCTIN,PHT,PRAT,PREL);
+    float SCTCO[ME],SCTIN[ME],PHT[ME],PRAT[ME],PREL[ME],PHDIF[ME];
+    Calculation(KMAX,NZ,WT, NF,NEGO,lenth,EN,KZ,KM,SCTCO,SCTIN,PHT,PRAT,PREL,PHDIF);
 
     for(int j=0;j<lenth; j++)
     {
         float crossAll =SCTCO[j]+SCTIN[j]+PHT[j]+PRAT[j]+PREL[j];
         double ca_noco=SCTIN[j]+PHT[j]+PRAT[j]+PREL[j];
-        printf("%10.3E%10.3E%10.3E%10.3E%10.3E%10.3E%10.3E%10.3E\n",EN[j]*1.0e-6,SCTCO[j],SCTIN[j],PHT[j],PRAT[j],PREL[j],crossAll,ca_noco);
+        if(KZ[j]>0)
+        {
+            printf("       %10.3E%10.3E%10.3E%10.3E%10.3E%10.3E%10.3E%10.3E\n",EN[j]*1.0e-6,SCTCO[j],SCTIN[j],PHT[j]-PHDIF[j],PRAT[j],PREL[j],crossAll-PHDIF[j],ca_noco-PHDIF[j]);
+            printf("%7d%10.3E%10.3E%10.3E%10.3E%10.3E%10.3E%10.3E%10.3E\n",KZ[j],EN[j]*1.0e-6,SCTCO[j],SCTIN[j],PHT[j],PRAT[j],PREL[j],crossAll,ca_noco);
+        }else
+            printf("       %10.3E%10.3E%10.3E%10.3E%10.3E%10.3E%10.3E%10.3E\n",EN[j]*1.0e-6,SCTCO[j],SCTIN[j],PHT[j]-PHDIF[j],PRAT[j],PREL[j],crossAll-PHDIF[j],ca_noco-PHDIF[j]);
     }
 }
 
@@ -119,8 +124,8 @@ void AnalysisGateMaterials()
 
         lenth = InitEnergyList(KMAX,NZ,NEGO,JENG,EAD,EN,KZ,KM);
 
-        float SCTCO[ME],SCTIN[ME],PHT[ME],PRAT[ME],PREL[ME];
-        Calculation(KMAX,NZ,WT, NF,NEGO,lenth,EN,KZ,KM,SCTCO,SCTIN,PHT,PRAT,PREL);
+        float SCTCO[ME],SCTIN[ME],PHT[ME],PRAT[ME],PREL[ME],PHDIF[ME];
+        Calculation(KMAX,NZ,WT, NF,NEGO,lenth,EN,KZ,KM,SCTCO,SCTIN,PHT,PRAT,PREL,PHDIF);
         if(i==0)
             printf("material  density(g/cm3) gamma(keV)  mu_mass(cm2/g)  mu(cm-1)\n");
         float crossAll=0.;

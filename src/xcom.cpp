@@ -226,7 +226,7 @@ int InitEnergyList(int KMAX,int *NZ,int NEGO,int JENG,/*int *JZ,int *JM,*/float 
 //  - KMAX: numbers of element in material
 //  - NZ  : lists of Z of element in material
 //  - WEIGHT : ratio of each element in material
-//  - NF   : Flag for select the unit of result (3:cm2/g)
+//  - NF   : Flag for select the unit of result (3:cm2/g) 2:b/atom in total cross
 //  - NEGO: Flag how to print energy list(3:only print energy list inputed;2:add input energy list in default)
 //  - NENG  : number of energy list to calculation
 //  -  EN  : lists of energy 
@@ -237,9 +237,10 @@ int InitEnergyList(int KMAX,int *NZ,int NEGO,int JENG,/*int *JZ,int *JM,*/float 
 //  - PHT  : photo-electric absorption
 //  - PRAT  : pair production in nuclear field
 //  - PREL  : pair production in electron field
-void Calculation(int KMAX,int *NZ,float *WEIGHT, int NF,int NEGO,int NENG,float *EN,int *KZ,int *KM,float *SCTCO,float *SCTIN,float *PHT,float *PRAT,float *PREL)
+//  - PHDIF : shell jump energy
+void Calculation(int KMAX,int *NZ,float *WEIGHT, int NF,int NEGO,int NENG,float *EN,int *KZ,int *KM,float *SCTCO,float *SCTIN,float *PHT,float *PRAT,float *PREL,float *PHDIF)
 {
-    float ENL[ME],PHDIF[ME];
+    float ENL[ME];//,PHDIF[ME];
     float AT[ME],ATNC[ME];
     string ALAB[ME];
     string EDGE[94];
@@ -251,11 +252,12 @@ void Calculation(int KMAX,int *NZ,float *WEIGHT, int NF,int NEGO,int NENG,float 
     for(int i=0;i<NENG;i++)
     {
         ENL[i] = log(EN[i]);
-        SCTCO[i] =0.0;
-        SCTIN[i] =0.0;
-        PHT[i] =0.0;
-        PRAT[i] =0.0;
-        PREL[i] =0.0;
+        SCTCO[i] =0.0f;
+        SCTIN[i] =0.0f;
+        PHT[i] =0.0f;
+        PRAT[i] =0.0f;
+        PREL[i] =0.0f;
+        PHDIF[i]=0.0f;
     }
     for(int K=0;K<KMAX;K++)
     {
@@ -476,17 +478,17 @@ void Calculation(int KMAX,int *NZ,float *WEIGHT, int NF,int NEGO,int NENG,float 
             }
         }
     }
-
+/*
     for(int i=0;i<NENG;i++)
     {
         ATNC[i]=SCTIN[i]+PHT[i]+PRAT[i]+PREL[i];
         AT[i]=ATNC[i]+SCTCO[i];
 
-        /*		if(NF==2)
-                {
-                AT[i]=AVOG*AT[i]/ATWT;
-                ATNC[i]=AVOG*ATNC[i]/ATWT;
-                }*/
+        	//	if(NF==2)
+            //    {
+            //    AT[i]=AVOG*AT[i]/ATWT;
+            //    ATNC[i]=AVOG*ATNC[i]/ATWT;
+            //    }
 
         if(KZ[i]>0)
         {
@@ -506,6 +508,7 @@ void Calculation(int KMAX,int *NZ,float *WEIGHT, int NF,int NEGO,int NENG,float 
 
         //	printf("%d  %10.3E%10.3E%10.3E%10.3E%10.3E%10.3E\n",i,EN[i]/1.E+6,SCTCO[i],SCTIN[i],PHT[i],PRAT[i],PREL[i]);
     }
+*/
 }
 
 // Reads element symbols or chemical formulas.
